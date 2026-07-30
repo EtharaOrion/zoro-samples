@@ -1,0 +1,34 @@
+version = "1.0"
+
+# RetailBench-specific fields live under [metadata] (Harbor's free-form dict[str, Any]).
+# The [environment] / [verifier] tables contain ONLY Harbor TaskConfig schema fields, so
+# this task validates against a strict Harbor loader. solution/solve.sh and tests/test.sh
+# are discovered by convention (not declared here).
+
+[metadata]
+id              = "70a4673a-d04f-5792-9761-de6a939a7139"
+suite           = "retailbench"
+archetype       = "dynamic_middle"
+description     = "Operating store #15 for 180 days, maximizing terminal net worth (cash + inventory at depreciated cost + in-transit)"
+# provenance (mirrors environment/dataset.json; horizon is a runner constant, absent from dataset):
+horizon_days    = 180
+economic_tier   = "micro"
+category_count  = 4
+category_effect = -0.3    # cross-SKU cannibalization coefficient (NOT price elasticity)
+enable_new      = false
+enable_review   = true
+difficulty      = "easy"
+# reference-solution (oracle) policy knobs — held constant across the suite so goldens compare:
+oracle_policy   = { sample_size = 2, bulk_qty_multiplier = 4 }
+# grading conventions consumed by tests/test.sh (paths, not Harbor schema fields):
+world_config    = "environment/dataset.json"
+submission      = "tool_calls.jsonl"
+
+[environment]
+# Graded on-host by the LLM council; Harbor's container engine is not used, so there is no
+# Dockerfile and docker_image is intentionally omitted. allow_internet documents that the
+# council reaches judge vendors.
+allow_internet = true
+
+[verifier]
+timeout_sec = 1800.0                     # council fan-out dominates wall-clock
