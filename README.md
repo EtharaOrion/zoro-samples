@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/zoro-store.png" width="330" alt="Zoro's Store — the delivery's emblem: a green-haired swordsman shopkeeper carrying a Zoro's Store shopping bag past his open storefront, with a chalkboard reading Run · Manage · Retain · Grow.">
+<img src="./mascot.png" width="330" alt="Zoro's Store — the delivery's emblem: a green-haired swordsman shopkeeper carrying a Zoro's Store shopping bag past his open storefront, with a chalkboard reading Run · Manage · Retain · Grow.">
 
 # Zoro · Retail Operations RL Environment
 
