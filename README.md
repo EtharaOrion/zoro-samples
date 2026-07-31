@@ -254,11 +254,9 @@ pie showData
 zoro-samples/
 ├── README.md
 ├── LICENSE                              # MIT, © 2026 Ethara.AI
+├── mascot.png                           # the Zoro's Store emblem above (circular, transparent bg)
 ├── .gitattributes                       # *.jsonl tracked via Git LFS
 ├── .gitignore
-├── assets/
-│   ├── zoro-store.png                   # the Zoro's Store emblem above
-│   └── zoro-mascot.svg                  # vector mark (fox merchant)
 └── <task-uuid>/                         # × 30, UUID = task identity
     ├── task.toml                        # Harbor metadata (archetype, difficulty, …)
     ├── instruction.md                   # the spec the agent sees (~17 lines)
@@ -503,7 +501,7 @@ Outputs land in `VERIFIER_OUT`: `test_results.json`, `council_results.json`, and
 
 <div align="center">
 
-<img src="assets/zoro-store.png" width="110" alt="Zoro's Store emblem">
+<img src="./mascot.png" width="110" alt="Zoro's Store emblem">
 
 **Zoro · Retail Operations RL Environment**
 🛒 Run. &nbsp;📋 Manage. &nbsp;🔁 Retain. &nbsp;📈 Grow.
