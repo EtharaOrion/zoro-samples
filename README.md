@@ -422,7 +422,7 @@ This sample ships the **complete raw run context** for two frontier models on ev
 | Days reached (of 180) | ~59 | ~68 |
 
 > [!TIP]
-> **Why this is a feature.** The specimen `claude-opus-4.8` run ended around day 59 with funds at **−$2,109.37** and net worth **−$1,043.77** — an early bankruptcy-style termination — and the `gpt-5.6` run also stopped far short of the 180-day horizon. Against oracle references that complete all 180 days profitably, these raw traces demonstrate what the reward design predicts: the environment is **unsaturated at the frontier**, with the money-primary reward leaving nearly the full band above current model performance. The per-day strategy files and checkpoints show *where and why* policies unravel — exactly the material a training team wants before scored runs arrive.
+> **Why this is a feature.** The specimen `opus-4.8` run ended around day 59 with funds at **−$2,109.37** and net worth **−$1,043.77** — an early bankruptcy-style termination — and the `gpt-5.6-sol` run also stopped far short of the 180-day horizon. Against oracle references that complete all 180 days profitably, these raw traces demonstrate what the reward design predicts: the environment is **unsaturated at the frontier**, with the money-primary reward leaving nearly the full band above current model performance. The per-day strategy files and checkpoints show *where and why* policies unravel — exactly the material a training team wants before scored runs arrive.
 
 ---
 
@@ -464,10 +464,10 @@ What varies across the 30 tasks: `archetype`, `difficulty`, the world economics 
 ```bash
 cd <task-uuid>
 
-# SUBMISSION: an agent run dir (e.g. trajectories/claude-opus-4.8/run_1/agent)
+# SUBMISSION: an agent run dir (e.g. trajectories/claude-opus-4-8/run_1/agent)
 #             or a tool_calls.jsonl directly.
 # VERIFIER_OUT: output dir (default: $TASK_DIR/verifier).
-SUBMISSION=trajectories/claude-opus-4.8/run_1/agent \
+SUBMISSION=trajectories/claude-opus-4-8/run_1/agent \
 VERIFIER_OUT=./verifier \
 bash tests/test.sh
 ```
@@ -503,10 +503,12 @@ Outputs land in `VERIFIER_OUT`: `test_results.json`, `council_results.json`, and
 
 <div align="center">
 
-<img src="assets/zoro-mascot.svg" width="72" alt="Zoro mascot">
+<img src="assets/zoro-store.png" width="110" alt="Zoro's Store emblem">
 
 **Zoro · Retail Operations RL Environment**
-Sample delivery · 30 tasks · MIT © 2026 Ethara.AI
+🛒 Run. &nbsp;📋 Manage. &nbsp;🔁 Retain. &nbsp;📈 Grow.
+
+Sample delivery · 30 tasks · 60 raw runs · MIT © 2026 Ethara.AI
 
 ✦ &nbsp;·&nbsp; ✦ &nbsp;·&nbsp; ✦
 
