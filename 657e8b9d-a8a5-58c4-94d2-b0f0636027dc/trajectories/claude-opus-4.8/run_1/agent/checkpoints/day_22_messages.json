@@ -1,0 +1,236 @@
+[
+  {
+    "role": "assistant",
+    "content": "I'll analyze the current business situation to determine if the strategy needs adjustment.",
+    "tool_calls": [
+      {
+        "id": "toolu_019wZYDzxbqpJQHEpu2ca7M7",
+        "type": "function",
+        "function": {
+          "name": "view_funds_and_date",
+          "arguments": "{}"
+        }
+      },
+      {
+        "id": "toolu_01DxUns9K5uPdq9oM686feoW",
+        "type": "function",
+        "function": {
+          "name": "view_inventory",
+          "arguments": "{}"
+        }
+      },
+      {
+        "id": "toolu_0156vJPpDPkVEkR6UbmBNTo1",
+        "type": "function",
+        "function": {
+          "name": "view_current_orders",
+          "arguments": "{}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "toolu_019wZYDzxbqpJQHEpu2ca7M7",
+    "content": "Current date: 1991-09-28, funds balance: 1592.12"
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "toolu_01DxUns9K5uPdq9oM686feoW",
+    "content": "Inventory summary: 25 SKUs, 4326 total items\n- 3828153085: quantity 250\n- 2100000001: quantity 300\n- 2100061223: quantity 2197\n- 3828153081: quantity 555\n- 5100006032: quantity 72\n- 1380010423: quantity 66\n- 1470001283: quantity 320\n- 4400000028: quantity 153\n- 4400000189: quantity 226\n- 4400000119: quantity 187"
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "toolu_0156vJPpDPkVEkR6UbmBNTo1",
+    "content": "## Open orders: 2\n\n| # | Order ID | SKU Count | Expected Delivery | Items |\n|---|---|---|---|---|\n| 0 | 42bbcd4c63fb4a8f8075e54cee1252c4 | 1 | 1991-10-01 | 5100006032: 350 |\n| 1 | 67cc4422379140458dd1e62b25065429 | 1 | 1991-09-29 | 5100006032: 150 |"
+  },
+  {
+    "role": "assistant",
+    "content": "Key observations: The 700u anchor order appears to have already arrived (stock now 2197u). 5100006032 is at 72u (dropping fast) with 150u arriving 9/29 and 350u arriving 10/01. Let me analyze recent sales velocity and key SKUs.",
+    "tool_calls": [
+      {
+        "id": "toolu_01DZQpvfn15nRwqmM1rKgvTn",
+        "type": "function",
+        "function": {
+          "name": "view_sku_sales_history",
+          "arguments": "{\"sku_ids\": [\"2100061223\", \"5100006032\", \"4400000028\", \"4400000119\", \"3828153081\"], \"start_date\": \"1991-09-18\", \"end_date\": \"1991-09-28\"}"
+        }
+      },
+      {
+        "id": "toolu_01NzhJB5N8UPixjhGyTSKPuS",
+        "type": "function",
+        "function": {
+          "name": "view_current_date_supplier_prices",
+          "arguments": "{\"sku_ids\": [\"2100061223\", \"5100006032\", \"4400000028\", \"4400000119\"]}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "toolu_01DZQpvfn15nRwqmM1rKgvTn",
+    "content": "### SKU: 2100061223\n\n| Date | Move | Price | Customers |\n|------|------|-------|-----------|\n| 1991-09-18 | 104 | 1.15 | 29190 |\n| 1991-09-19 | 99 | 1.15 | 28777 |\n| 1991-09-20 | 113 | 1.15 | 29841 |\n| 1991-09-21 | 168 | 1.15 | 36491 |\n| 1991-09-22 | 137 | 1.15 | 32424 |\n| 1991-09-23 | 91 | 1.15 | 28833 |\n| 1991-09-24 | 104 | 1.15 | 27839 |\n| 1991-09-25 | 122 | 1.15 | 28518 |\n| 1991-09-26 | 87 | 1.15 | 27762 |\n| 1991-09-27 | 141 | 1.15 | 28532 |\n\n### SKU: 5100006032\n\n| Date | Move | Price | Customers |\n|------|------|-------|-----------|\n| 1991-09-18 | 42 | 0.62 | 29190 |\n| 1991-09-19 | 40 | 0.62 | 28777 |\n| 1991-09-20 | 26 | 0.62 | 29841 |\n| 1991-09-21 | 65 | 0.62 | 36491 |\n| 1991-09-22 | 49 | 0.62 | 32424 |\n| 1991-09-23 | 53 | 0.62 | 28833 |\n| 1991-09-24 | 36 | 0.62 | 27839 |\n| 1991-09-25 | 53 | 0.62 | 28518 |\n| 1991-09-26 | 50 | 0.62 | 27762 |\n| 1991-09-27 | 41 | 0.62 | 28532 |\n\n### SKU: 4400000028\n\n| Date | Move | Price | Customers |\n|------|------|-------|-----------|\n| 1991-09-18 | 26 | 2.19 | 29190 |\n| 1991-09-19 | 24 | 2.19 | 28777 |\n| 1991-09-20 | 22 | 2.19 | 29841 |\n| 1991-09-21 | 24 | 2.19 | 36491 |\n| 1991-09-22 | 3 | 2.19 | 32424 |\n| 1991-09-23 | 24 | 2.19 | 28833 |\n| 1991-09-24 | 19 | 2.19 | 27839 |\n| 1991-09-25 | 5 | 2.19 | 28518 |\n| 1991-09-26 | 19 | 2.19 | 27762 |\n| 1991-09-27 | 10 | 2.19 | 28532 |\n\n### SKU: 4400000119\n\n| Date | Move | Price | Customers |\n|------|------|-------|-----------|\n| 1991-09-19 | 32 | 1.49 | 28777 |\n| 1991-09-20 | 2 | 1.49 | 29841 |\n| 1991-09-21 | 7 | 1.49 | 36491 |\n| 1991-09-22 | 26 | 1.39 | 32424 |\n| 1991-09-24 | 5 | 1.39 | 27839 |\n| 1991-09-25 | 45 | 1.39 | 28518 |\n| 1991-09-26 | 42 | 1.39 | 27762 |\n| 1991-09-27 | 8 | 1.39 | 28532 |\n\n### SKU: 3828153081\n\n| Date | Move | Price | Customers |\n|------|------|-------|-----------|\n| 1991-09-18 | 42 | 0.99 | 29190 |\n| 1991-09-19 | 33 | 0.99 | 28777 |\n| 1991-09-20 | 25 | 0.99 | 29841 |\n| 1991-09-21 | 42 | 0.99 | 36491 |\n| 1991-09-22 | 30 | 0.99 | 32424 |\n| 1991-09-23 | 53 | 0.99 | 28833 |\n| 1991-09-24 | 18 | 0.99 | 27839 |\n| 1991-09-25 | 4 | 0.99 | 28518 |\n| 1991-09-26 | 48 | 0.99 | 27762 |\n| 1991-09-27 | 16 | 0.99 | 28532 |"
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "toolu_01NzhJB5N8UPixjhGyTSKPuS",
+    "content": "## Supplier prices on 1991-09-28\n\n| Supplier | SKU | Price |\n|---|---|---|\n| supplier_1 | 2100061223 | 0.50913 |\n| supplier_1 | 5100006032 | 0.358029 |\n| supplier_1 | 4400000028 | 2.037014 |\n| supplier_1 | 4400000119 | 1.628746 |\n| supplier_2 | 2100061223 | 0.866971 |\n| supplier_2 | 5100006032 | 0.59363 |\n| supplier_2 | 4400000028 | 1.27557 |\n| supplier_2 | 4400000119 | 1.148717 |\n| supplier_3 | 2100061223 | 0.84641 |\n| supplier_3 | 5100006032 | 0.534952 |\n| supplier_3 | 4400000028 | 1.979309 |\n| supplier_3 | 4400000119 | 1.443414 |\n| supplier_4 | 2100061223 | 0.521864 |\n| supplier_4 | 5100006032 | 0.388299 |\n| supplier_4 | 4400000028 | 1.890524 |\n| supplier_4 | 4400000119 | 1.70309 |\n| supplier_5 | 2100061223 | 0.87423 |\n| supplier_5 | 5100006032 | 0.386188 |\n| supplier_5 | 4400000028 | 2.040401 |\n| supplier_5 | 4400000119 | 1.737993 |"
+  },
+  {
+    "role": "assistant",
+    "content": "Important updates:\n- **Anchor (2100061223)**: Stock 2197u (700u arrived). Velocity avg ~117/day, strong (141 on 9/27). 2197u = ~19 days supply, near 25d expiry. NO reorder needed today. supplier_1 cheapest at $0.509.\n- **5100006032**: Stock only 72u, velocity ~45/day. 150u arriving 9/29 + 350u arriving 10/01 = pipeline solid. 72u = ~1.6 days but 150u lands tomorrow. Tight but covered.\n- **4400000028**: Stock 153u, velocity erratic (10-24/day, avg ~15). ~10 days supply. supplier_1 price jumped to $2.037 now (was $1.267); supplier_2 cheapest at $1.276. Note: supplier_2 flagged blacklisted. Plan small reorder ~9/30.\n- **4400000119**: Stock 187u, velocity erratic (8-45/day). ~7 days. supplier_2 cheapest ($1.149) but blacklisted; supplier_3 $1.443.\n- **3828153081**: Stock 555u, clearance, no reorder.\n\nLet me note the supplier_1 price change for 4400000028 is significant. Let me check the anchor draw-down timing. With 2197u and ~117/day, stock will draw to ~1400u around Oct 2-3. No reorder today.\n\nOverall the strategy remains largely sound. Key changes: anchor stock is higher than expected (2197u vs planned), 5100006032 is tighter (72u), and supplier_1's 4400000028 price jumped. Let me update the strategy accordingly.",
+    "tool_calls": [
+      {
+        "id": "toolu_01NNyr89tX1HRr7S1nbZhUNL",
+        "type": "function",
+        "function": {
+          "name": "view_return_rates",
+          "arguments": "{\"sku_ids\": [\"5100006032\", \"4400000028\", \"4400000119\"], \"start_date\": \"1991-09-21\", \"end_date\": \"1991-09-28\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "toolu_01NNyr89tX1HRr7S1nbZhUNL",
+    "content": "## Return rates 1991-09-21 ~ 1991-09-28\n| SKU | Date | Return Rate | Return Number |\n|---|---|---|---|\n| 5100006032 | 1991-09-21 | 0.13846153846153847 | 9 |\n| 5100006032 | 1991-09-22 | 0.12244897959183673 | 6 |\n| 5100006032 | 1991-09-23 | 0.11320754716981132 | 6 |\n| 5100006032 | 1991-09-24 | 0.1111111111111111 | 4 |\n| 5100006032 | 1991-09-25 | 0.11320754716981132 | 6 |\n| 5100006032 | 1991-09-26 | 0.1 | 5 |\n| 5100006032 | 1991-09-27 | 0.024390243902439025 | 1 |\n| 4400000028 | 1991-09-21 | 0.20833333333333334 | 5 |\n| 4400000028 | 1991-09-22 | 0.3333333333333333 | 1 |\n| 4400000028 | 1991-09-23 | 0.20833333333333334 | 5 |\n| 4400000028 | 1991-09-24 | 0.21052631578947367 | 4 |\n| 4400000028 | 1991-09-25 | 0.4 | 2 |\n| 4400000028 | 1991-09-26 | 0.21052631578947367 | 4 |\n| 4400000028 | 1991-09-27 | 0.2 | 2 |\n| 4400000119 | 1991-09-21 | 0.14285714285714285 | 1 |\n| 4400000119 | 1991-09-22 | 0.23076923076923078 | 6 |\n| 4400000119 | 1991-09-24 | 0.2 | 1 |\n| 4400000119 | 1991-09-25 | 0.15555555555555556 | 7 |\n| 4400000119 | 1991-09-26 | 0.19047619047619047 | 8 |\n| 4400000119 | 1991-09-27 | 0.125 | 1 |"
+  },
+  {
+    "role": "assistant",
+    "content": "Return rates confirm: 5100006032 improving (down to 2.4% on 9/27), 4400000028 elevated ~20% (small denominators), 4400000119 ~15-23%. All within tolerance per current strategy.\n\nThe strategy is fundamentally sound. Key updates for Day 22: anchor stock landed (2197u, no reorder), 5100006032 tight but covered, supplier_1's 4400000028 price jumped so supplier_2 is now cheapest (but blacklisted). No spend today. Let me update the strategy to reflect current state.",
+    "tool_calls": [
+      {
+        "id": "toolu_01ATRnmdBZzcNiS1wATrpunc",
+        "type": "function",
+        "function": {
+          "name": "set_macro_strategy",
+          "arguments": "{\"macro_strategy\": [\"ANCHOR 2100061223 IS THE PROFIT ENGINE: 4.88 rating, ~2-3% returns. Velocity steady 87-168/day, avg ~117/day (141 on 9/27). 700u landed - stock now 2197u = ~19d supply, near 25d expiry edge - do NOT overstock. HOLD $1.15 (cheapest supplier_1 $0.509, supplier_4 $0.522 = ~$0.60+ margin). NO reorder today. Next anchor reorder ~10/2-10/3 as stock draws to ~1400u. Cut to $1.09 only if velocity <90/day for 2 consecutive days.\", \"5100006032 TIGHT BUT COVERED: 72u stock, velocity ~45/day. 150u arriving 9/29 + 350u arriving 10/01 = 572u pipeline ~12d. NO new order today (150u lands tomorrow). HOLD $0.62 (~$0.25 margin at supplier_1 $0.358 / supplier_4 $0.388). Returns improving (2.4% on 9/27, down from 11-14%). Cut only if returns >18-20% sustained.\", \"4400000028 RECOVERY HOLDING: erratic velocity 10-24/day with single-day dips (3u Sep22, 5u Sep25). avg ~15/day. Returns elevated ~20% but small denominators. 2.0 rating. Stock 153u = ~10d vs 25d expiry. HOLD $2.19. SUPPLIER SHIFT: supplier_1 jumped to $2.037 (was $1.267); supplier_2 now cheapest at $1.276 but BLACKLISTED. Defer reorder; if reorder needed use supplier_3 ($1.979) or wait for supplier_1 to drop. Cut to $1.99 only if velocity <10u AND returns >25% for 2 consecutive days.\", \"4400000119 ERRATIC: 2-45u/day (8u Sep27 after 45/42 Sep25/26). Returns volatile 12-23%. Stock 187u = ~7d. HOLD $1.39. supplier_2 cheapest ($1.149) but BLACKLISTED; supplier_3 $1.443. No reorder unless velocity sustains >40/day for 2+ days. Deeper cut to $1.25 only if velocity <10u for 2+ days.\", \"3828153081 MOLDY-BATCH CLEARANCE: rating ~1.4, erratic 4-53u/day (16u Sep27). Stock 555u dumping $0.99. Returns volatile. HOLD $0.99. Do NOT reorder (moldy batch). If velocity stays <10u for 2+ days consider $0.89 deeper clearance.\", \"DEAD SKUs CONFIRMED WRITE-OFFS: 1470001283 ($0.99, 320u), 3828153085 ($0.39, 250u), 2100000001 ($0.55, 300u), 4400000189 ($1.19, 226u zero-demand cannibalized despite 5.0 rating) - zero sales 14+ days at floor. Accept disposal; stop wasting price actions. 1380010423 (spoiled batch, 66u) keep $0.99 clearing.\", \"CASH DISCIPLINE: funds $1592 (~13-day rent buffer at $120/day). NO spend today (all key SKUs covered by pipeline). Keep >=$800 cash buffer. Anchor profit + steady SKUs (5100006032, 3828153081, 4400000028) drive daily earnings ~$220-310. Reserve cash for anchor reorder ~10/2-10/3.\", \"PRICING DISCIPLINE: maximize dollar-margin x volume with full sell-through before expiry. Never list good SKUs at demand-suppressing ceilings. Prefer forced clearance over spoilage. Don't chase dead cannibalized SKUs with endless cuts - accept write-offs.\"]}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "toolu_01ATRnmdBZzcNiS1wATrpunc",
+    "content": "Set macro_strategy:\nOld: [\n  \"ANCHOR 2100061223 IS THE PROFIT ENGINE: 4.88 rating, ~2-3% returns. Velocity steady 87-168/day, avg ~114/day. Stock 1638u + 700u incoming 9/28 = 2338u = ~20d supply, near 25d expiry edge - do NOT overstock. HOLD $1.15 (cheapest supplier_1 $0.505, supplier_4 $0.544 = ~$0.60 margin). NO reorder today. Next anchor reorder ~9/30-10/1 after 700u lands and stock draws to ~1400u. Cut to $1.09 only if velocity <90/day for 2 consecutive days.\",\n  \"5100006032 WELL-COVERED NOW: avg ~44-50/day at $0.62, returns 11-15%, 38d expiry (no spoilage risk). Stock 113u + 150u arriving 9/29 + 350u arriving 10/01 = 613u pipeline = ~12d. NO new order today. HOLD $0.62 (strong ~$0.25 margin at supplier_4 $0.352 / supplier_1 $0.374). Cut only if returns >18-20% sustained.\",\n  \"4400000028 RECOVERY HOLDING: 19-24u/day steady with erratic single-day dips (3u Sep22, 5u Sep25 - blips). Returns elevated but volatile (small denominators). 2.0 rating. Stock 163u = ~8d vs 25d expiry. HOLD $2.19 (cost supplier_1 $1.267, strong margin). Consider small reorder (~100u supplier_1) ~9/30 as stock draws. Cut to $1.99 only if velocity <10u AND returns >25% for 2 consecutive days.\",\n  \"4400000119 RECOVERING: was erratic 2-45u/day but last 2 days strong (45u Sep25, 42u Sep26). Returns volatile 15-23%. Stock 195u = ~5d at current pace. HOLD $1.39. supplier_2 cheapest ($1.095) but BLACKLISTED - no reorder unless velocity sustains >40/day, then evaluate supplier_3 ($1.387). Deeper cut to $1.25 only if velocity <10u for 2+ days.\",\n  \"3828153081 MOLDY-BATCH CLEARANCE: rating ~1.4, bounced back to 48u Sep26 after 4u Sep25 blip - demand NOT exhausted. Stock 571u dumping $0.99. Returns volatile 6-21%. HOLD $0.99. Do NOT reorder (moldy batch). If velocity stays <10u for 2+ days consider $0.89 deeper clearance.\",\n  \"DEAD SKUs CONFIRMED WRITE-OFFS: 1470001283 ($0.99, 320u), 3828153085 ($0.39, 250u), 2100000001 ($0.55, 300u), 4400000189 ($1.19, 226u zero-demand cannibalized despite 5.0 rating) - zero sales 14+ days at floor. Accept disposal; stop wasting price actions. 1380010423 (spoiled batch, 69u) keep $0.99 clearing.\",\n  \"CASH DISCIPLINE: funds $1488 (~12-day rent buffer at $120/day). NO spend today (all key SKUs covered by pipeline). Keep >=$800 cash buffer. Anchor profit + steady SKUs (5100006032, 3828153081, 4400000028) drive daily earnings ~$220-310. Reserve cash for anchor reorder ~9/30.\",\n  \"PRICING DISCIPLINE: maximize dollar-margin x volume with full sell-through before expiry. Never list good SKUs at demand-suppressing ceilings. Prefer forced clearance over spoilage. Don't chase dead cannibalized SKUs with endless cuts - accept write-offs.\"\n]\nNew: [\n  \"ANCHOR 2100061223 IS THE PROFIT ENGINE: 4.88 rating, ~2-3% returns. Velocity steady 87-168/day, avg ~117/day (141 on 9/27). 700u landed - stock now 2197u = ~19d supply, near 25d expiry edge - do NOT overstock. HOLD $1.15 (cheapest supplier_1 $0.509, supplier_4 $0.522 = ~$0.60+ margin). NO reorder today. Next anchor reorder ~10/2-10/3 as stock draws to ~1400u. Cut to $1.09 only if velocity <90/day for 2 consecutive days.\",\n  \"5100006032 TIGHT BUT COVERED: 72u stock, velocity ~45/day. 150u arriving 9/29 + 350u arriving 10/01 = 572u pipeline ~12d. NO new order today (150u lands tomorrow). HOLD $0.62 (~$0.25 margin at supplier_1 $0.358 / supplier_4 $0.388). Returns improving (2.4% on 9/27, down from 11-14%). Cut only if returns >18-20% sustained.\",\n  \"4400000028 RECOVERY HOLDING: erratic velocity 10-24/day with single-day dips (3u Sep22, 5u Sep25). avg ~15/day. Returns elevated ~20% but small denominators. 2.0 rating. Stock 153u = ~10d vs 25d expiry. HOLD $2.19. SUPPLIER SHIFT: supplier_1 jumped to $2.037 (was $1.267); supplier_2 now cheapest at $1.276 but BLACKLISTED. Defer reorder; if reorder needed use supplier_3 ($1.979) or wait for supplier_1 to drop. Cut to $1.99 only if velocity <10u AND returns >25% for 2 consecutive days.\",\n  \"4400000119 ERRATIC: 2-45u/day (8u Sep27 after 45/42 Sep25/26). Returns volatile 12-23%. Stock 187u = ~7d. HOLD $1.39. supplier_2 cheapest ($1.149) but BLACKLISTED; supplier_3 $1.443. No reorder unless velocity sustains >40/day for 2+ days. Deeper cut to $1.25 only if velocity <10u for 2+ days.\",\n  \"3828153081 MOLDY-BATCH CLEARANCE: rating ~1.4, erratic 4-53u/day (16u Sep27). Stock 555u dumping $0.99. Returns volatile. HOLD $0.99. Do NOT reorder (moldy batch). If velocity stays <10u for 2+ days consider $0.89 deeper clearance.\",\n  \"DEAD SKUs CONFIRMED WRITE-OFFS: 1470001283 ($0.99, 320u), 3828153085 ($0.39, 250u), 2100000001 ($0.55, 300u), 4400000189 ($1.19, 226u zero-demand cannibalized despite 5.0 rating) - zero sales 14+ days at floor. Accept disposal; stop wasting price actions. 1380010423 (spoiled batch, 66u) keep $0.99 clearing.\",\n  \"CASH DISCIPLINE: funds $1592 (~13-day rent buffer at $120/day). NO spend today (all key SKUs covered by pipeline). Keep >=$800 cash buffer. Anchor profit + steady SKUs (5100006032, 3828153081, 4400000028) drive daily earnings ~$220-310. Reserve cash for anchor reorder ~10/2-10/3.\",\n  \"PRICING DISCIPLINE: maximize dollar-margin x volume with full sell-through before expiry. Never list good SKUs at demand-suppressing ceilings. Prefer forced clearance over spoilage. Don't chase dead cannibalized SKUs with endless cuts - accept write-offs.\"\n]"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "tool_calls": [
+      {
+        "id": "toolu_01JusswD2aVhQXZwrhngpcHX",
+        "type": "function",
+        "function": {
+          "name": "set_execute_strategy",
+          "arguments": "{\"execute_strategy\": {\"focus_skus\": [\"2100061223\", \"5100006032\", \"4400000028\", \"4400000119\", \"3828153081\"], \"sku_supplier_mapping\": [{\"sku_id\": \"2100061223\", \"supplier_id\": \"supplier_1\"}, {\"sku_id\": \"2100061223\", \"supplier_id\": \"supplier_4\"}, {\"sku_id\": \"5100006032\", \"supplier_id\": \"supplier_1\"}, {\"sku_id\": \"5100006032\", \"supplier_id\": \"supplier_4\"}, {\"sku_id\": \"5100006032\", \"supplier_id\": \"supplier_5\"}, {\"sku_id\": \"3828153081\", \"supplier_id\": \"supplier_1\"}, {\"sku_id\": \"4400000028\", \"supplier_id\": \"supplier_3\"}, {\"sku_id\": \"4400000119\", \"supplier_id\": \"supplier_3\"}], \"news_to_monitor\": [], \"skus_to_reorder\": [], \"price_adjustments\": [{\"sku_id\": \"2100061223\", \"adjustment\": \"HOLD $1.15 (anchor, 4.88 rating ~2-3% returns. Velocity ~117/day. 700u landed - stock 2197u ~19d supply. NO reorder today; next reorder ~10/2-10/3 as stock draws to ~1400u. Cut to $1.09 only if velocity <90/day for 2 days)\"}, {\"sku_id\": \"5100006032\", \"adjustment\": \"HOLD $0.62 - TIGHT BUT COVERED: 72u + 150u arriving 9/29 + 350u arriving 10/01 = 572u pipeline ~12d. NO new order. Strong ~45/day, returns improving (2.4% on 9/27), 38d expiry safe. Cut only if returns >18-20% sustained\"}, {\"sku_id\": \"4400000028\", \"adjustment\": \"HOLD $2.19 - recovery holding (10-24u/day, avg ~15). Stock 153u ~10d. SUPPLIER SHIFT: supplier_1 jumped to $2.037, supplier_2 cheapest $1.276 but blacklisted. Defer reorder; use supplier_3 ($1.979) or wait for supplier_1 to drop. Cut to $1.99 only if <10u AND returns >25% for 2 days\"}, {\"sku_id\": \"4400000119\", \"adjustment\": \"HOLD $1.39 (erratic: 8u Sep27 after 45/42 Sep25/26; returns 12-23%; 187u ~7d). supplier_2 blacklisted; supplier_3 $1.443. No reorder unless velocity sustains >40/day for 2 days. Deeper cut to $1.25 if <10u for 2+ days\"}, {\"sku_id\": \"4400000189\", \"adjustment\": \"HOLD $1.19 - WRITE-OFF: zero sales; cannibalized; accept disposal, stop price actions\"}, {\"sku_id\": \"3828153081\", \"adjustment\": \"HOLD $0.99 (moldy batch clearance, 555u; erratic 4-53u/day, 16u Sep27; no reorder; consider $0.89 if <10u 2+ days)\"}, {\"sku_id\": \"1380010423\", \"adjustment\": \"HOLD $0.99 (spoiled batch, 66u clearing; NO reorder)\"}, {\"sku_id\": \"1470001283\", \"adjustment\": \"HOLD $0.99 - DEAD/WRITE-OFF: zero sales 14+ days; accept disposal\"}, {\"sku_id\": \"3828153085\", \"adjustment\": \"HOLD $0.39 - DEAD/WRITE-OFF: zero sales 14+ days; accept disposal\"}, {\"sku_id\": \"2100000001\", \"adjustment\": \"HOLD $0.55 - DEAD/WRITE-OFF: zero sales 14+ days; accept disposal\"}], \"sku_to_monitor\": [\"2100061223\", \"5100006032\", \"4400000028\", \"4400000119\", \"3828153081\"], \"other\": [{\"comment\": \"Day22 (1991-09-28): NO ACTIONS today - all key SKUs covered by pipeline. Key updates: (1) ANCHOR 700u LANDED - stock now 2197u = ~19d supply, NO reorder, defer to ~10/2-10/3 (watch overstock vs 25d expiry); (2) 5100006032 tight at 72u but 150u lands 9/29 + 350u 10/01 - NO new order; returns improved to 2.4% on 9/27; (3) 4400000028 SUPPLIER SHIFT: supplier_1 price jumped to $2.037 (was $1.267), supplier_2 cheapest $1.276 but blacklisted - defer reorder, use supplier_3 if needed; stock 153u ~10d; (4) 4400000119 dropped to 8u Sep27 (erratic) - no reorder; (5) 3828153081 16u Sep27, still clearing. TODO Day23: confirm 5100006032 9/29 delivery (150u); watch anchor draw-down for ~10/2 reorder timing; watch 4400000028 supplier_1 price for reorder window; watch 4400000119 & 3828153081 velocity.\"}]}}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "toolu_01JusswD2aVhQXZwrhngpcHX",
+    "content": "Set execute_strategy:\nOld: {\n  \"focus_skus\": [\n    \"2100061223\",\n    \"5100006032\",\n    \"4400000028\",\n    \"4400000119\",\n    \"3828153081\"\n  ],\n  \"sku_supplier_mapping\": [\n    {\n      \"sku_id\": \"2100061223\",\n      \"supplier_id\": \"supplier_1\"\n    },\n    {\n      \"sku_id\": \"2100061223\",\n      \"supplier_id\": \"supplier_4\"\n    },\n    {\n      \"sku_id\": \"5100006032\",\n      \"supplier_id\": \"supplier_4\"\n    },\n    {\n      \"sku_id\": \"5100006032\",\n      \"supplier_id\": \"supplier_1\"\n    },\n    {\n      \"sku_id\": \"5100006032\",\n      \"supplier_id\": \"supplier_5\"\n    },\n    {\n      \"sku_id\": \"3828153081\",\n      \"supplier_id\": \"supplier_1\"\n    },\n    {\n      \"sku_id\": \"4400000028\",\n      \"supplier_id\": \"supplier_1\"\n    },\n    {\n      \"sku_id\": \"4400000119\",\n      \"supplier_id\": \"supplier_3\"\n    }\n  ],\n  \"news_to_monitor\": [],\n  \"skus_to_reorder\": [],\n  \"price_adjustments\": [\n    {\n      \"sku_id\": \"2100061223\",\n      \"adjustment\": \"HOLD $1.15 (anchor, 4.88 rating ~2-3% returns. Velocity ~114/day. Stock 1638u + 700u incoming 9/28 = 2338u ~20d supply. NO reorder today; next reorder ~9/30-10/1. Cut to $1.09 only if velocity <90/day for 2 days)\"\n    },\n    {\n      \"sku_id\": \"5100006032\",\n      \"adjustment\": \"HOLD $0.62 - WELL-COVERED: 113u + 150u arriving 9/29 + 350u arriving 10/01 = 613u pipeline ~12d. NO new order. Strong 44-50/day, 38d expiry safe. Cut only if returns >18-20% sustained\"\n    },\n    {\n      \"sku_id\": \"4400000028\",\n      \"adjustment\": \"HOLD $2.19 - recovery holding (19-24u/day with erratic single-day dips). Stock 163u ~8d. Consider ~100u reorder from supplier_1 ($1.267) ~9/30. Cut to $1.99 only if <10u AND returns >25% for 2 days\"\n    },\n    {\n      \"sku_id\": \"4400000119\",\n      \"adjustment\": \"HOLD $1.39 (recovering: 45u Sep25, 42u Sep26; returns 15-23%; 195u ~5d). supplier_2 blacklisted. No reorder unless velocity sustains >40/day then eval supplier_3. Deeper cut to $1.25 if <10u for 2+ days\"\n    },\n    {\n      \"sku_id\": \"4400000189\",\n      \"adjustment\": \"HOLD $1.19 - WRITE-OFF: zero sales; cannibalized; accept disposal, stop price actions\"\n    },\n    {\n      \"sku_id\": \"3828153081\",\n      \"adjustment\": \"HOLD $0.99 (moldy batch clearance, 571u; bounced back to 48u Sep26 - demand not exhausted; no reorder; consider $0.89 if <10u 2+ days)\"\n    },\n    {\n      \"sku_id\": \"1380010423\",\n      \"adjustment\": \"HOLD $0.99 (spoiled batch, 69u clearing; NO reorder)\"\n    },\n    {\n      \"sku_id\": \"1470001283\",\n      \"adjustment\": \"HOLD $0.99 - DEAD/WRITE-OFF: zero sales 14+ days; accept disposal\"\n    },\n    {\n      \"sku_id\": \"3828153085\",\n      \"adjustment\": \"HOLD $0.39 - DEAD/WRITE-OFF: zero sales 14+ days; accept disposal\"\n    },\n    {\n      \"sku_id\": \"2100000001\",\n      \"adjustment\": \"HOLD $0.55 - DEAD/WRITE-OFF: zero sales 14+ days; accept disposal\"\n    }\n  ],\n  \"sku_to_monitor\": [\n    \"2100061223\",\n    \"5100006032\",\n    \"4400000028\",\n    \"4400000119\",\n    \"3828153081\"\n  ],\n  \"other\": [\n    {\n      \"comment\": \"Day21 (1991-09-27): NO ACTIONS today - all key SKUs covered. Key updates: (1) Day20 bridge 150u 5100006032 confirmed OPEN, arriving 9/29; plus 350u arriving 10/01 = pipeline ~613u ~12d, so NO new 5100006032 order; (2) anchor 700u still incoming 9/28, stock 1638u = ~20d supply, NO anchor reorder, defer to 9/30-10/1 (watch overstock vs 25d expiry); (3) 4400000028 stock 163u ~8d, plan small ~100u reorder supplier_1 ($1.267) ~9/30; (4) 4400000119 RECOVERED (45u,42u last 2 days) - no reorder yet (supplier_2 blacklisted); (5) 3828153081 bounced back to 48u - demand not exhausted; (6) supplier_1 now cheapest for anchor ($0.505) and 4400000028. TODO Day22: watch anchor draw-down for reorder timing; confirm 5100006032 9/29 & 10/01 deliveries; watch 4400000028 & 4400000119 velocity for reorder decisions.\"\n    }\n  ]\n}\nNew: {\n  \"focus_skus\": [\n    \"2100061223\",\n    \"5100006032\",\n    \"4400000028\",\n    \"4400000119\",\n    \"3828153081\"\n  ],\n  \"sku_supplier_mapping\": [\n    {\n      \"sku_id\": \"2100061223\",\n      \"supplier_id\": \"supplier_1\"\n    },\n    {\n      \"sku_id\": \"2100061223\",\n      \"supplier_id\": \"supplier_4\"\n    },\n    {\n      \"sku_id\": \"5100006032\",\n      \"supplier_id\": \"supplier_1\"\n    },\n    {\n      \"sku_id\": \"5100006032\",\n      \"supplier_id\": \"supplier_4\"\n    },\n    {\n      \"sku_id\": \"5100006032\",\n      \"supplier_id\": \"supplier_5\"\n    },\n    {\n      \"sku_id\": \"3828153081\",\n      \"supplier_id\": \"supplier_1\"\n    },\n    {\n      \"sku_id\": \"4400000028\",\n      \"supplier_id\": \"supplier_3\"\n    },\n    {\n      \"sku_id\": \"4400000119\",\n      \"supplier_id\": \"supplier_3\"\n    }\n  ],\n  \"news_to_monitor\": [],\n  \"skus_to_reorder\": [],\n  \"price_adjustments\": [\n    {\n      \"sku_id\": \"2100061223\",\n      \"adjustment\": \"HOLD $1.15 (anchor, 4.88 rating ~2-3% returns. Velocity ~117/day. 700u landed - stock 2197u ~19d supply. NO reorder today; next reorder ~10/2-10/3 as stock draws to ~1400u. Cut to $1.09 only if velocity <90/day for 2 days)\"\n    },\n    {\n      \"sku_id\": \"5100006032\",\n      \"adjustment\": \"HOLD $0.62 - TIGHT BUT COVERED: 72u + 150u arriving 9/29 + 350u arriving 10/01 = 572u pipeline ~12d. NO new order. Strong ~45/day, returns improving (2.4% on 9/27), 38d expiry safe. Cut only if returns >18-20% sustained\"\n    },\n    {\n      \"sku_id\": \"4400000028\",\n      \"adjustment\": \"HOLD $2.19 - recovery holding (10-24u/day, avg ~15). Stock 153u ~10d. SUPPLIER SHIFT: supplier_1 jumped to $2.037, supplier_2 cheapest $1.276 but blacklisted. Defer reorder; use supplier_3 ($1.979) or wait for supplier_1 to drop. Cut to $1.99 only if <10u AND returns >25% for 2 days\"\n    },\n    {\n      \"sku_id\": \"4400000119\",\n      \"adjustment\": \"HOLD $1.39 (erratic: 8u Sep27 after 45/42 Sep25/26; returns 12-23%; 187u ~7d). supplier_2 blacklisted; supplier_3 $1.443. No reorder unless velocity sustains >40/day for 2 days. Deeper cut to $1.25 if <10u for 2+ days\"\n    },\n    {\n      \"sku_id\": \"4400000189\",\n      \"adjustment\": \"HOLD $1.19 - WRITE-OFF: zero sales; cannibalized; accept disposal, stop price actions\"\n    },\n    {\n      \"sku_id\": \"3828153081\",\n      \"adjustment\": \"HOLD $0.99 (moldy batch clearance, 555u; erratic 4-53u/day, 16u Sep27; no reorder; consider $0.89 if <10u 2+ days)\"\n    },\n    {\n      \"sku_id\": \"1380010423\",\n      \"adjustment\": \"HOLD $0.99 (spoiled batch, 66u clearing; NO reorder)\"\n    },\n    {\n      \"sku_id\": \"1470001283\",\n      \"adjustment\": \"HOLD $0.99 - DEAD/WRITE-OFF: zero sales 14+ days; accept disposal\"\n    },\n    {\n      \"sku_id\": \"3828153085\",\n      \"adjustment\": \"HOLD $0.39 - DEAD/WRITE-OFF: zero sales 14+ days; accept disposal\"\n    },\n    {\n      \"sku_id\": \"2100000001\",\n      \"adjustment\": \"HOLD $0.55 - DEAD/WRITE-OFF: zero sales 14+ days; accept disposal\"\n    }\n  ],\n  \"sku_to_monitor\": [\n    \"2100061223\",\n    \"5100006032\",\n    \"4400000028\",\n    \"4400000119\",\n    \"3828153081\"\n  ],\n  \"other\": [\n    {\n      \"comment\": \"Day22 (1991-09-28): NO ACTIONS today - all key SKUs covered by pipeline. Key updates: (1) ANCHOR 700u LANDED - stock now 2197u = ~19d supply, NO reorder, defer to ~10/2-10/3 (watch overstock vs 25d expiry); (2) 5100006032 tight at 72u but 150u lands 9/29 + 350u 10/01 - NO new order; returns improved to 2.4% on 9/27; (3) 4400000028 SUPPLIER SHIFT: supplier_1 price jumped to $2.037 (was $1.267), supplier_2 cheapest $1.276 but blacklisted - defer reorder, use supplier_3 if needed; stock 153u ~10d; (4) 4400000119 dropped to 8u Sep27 (erratic) - no reorder; (5) 3828153081 16u Sep27, still clearing. TODO Day23: confirm 5100006032 9/29 delivery (150u); watch anchor draw-down for ~10/2 reorder timing; watch 4400000028 supplier_1 price for reorder window; watch 4400000119 & 3828153081 velocity.\"\n    }\n  ]\n}"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "tool_calls": [
+      {
+        "id": "toolu_01WgSHEemPHvpVZrR1GNGhx8",
+        "type": "function",
+        "function": {
+          "name": "set_action",
+          "arguments": "{\"action\": []}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "toolu_01WgSHEemPHvpVZrR1GNGhx8",
+    "content": "Set today_action (tool call list):\nOld: []\nNew: []"
+  },
+  {
+    "role": "assistant",
+    "content": "Strategy analysis complete for Day 22.\n\n**Summary of findings:**\n- **Anchor 2100061223**: 700u landed, stock now 2197u (~19d supply, near 25d expiry). Velocity healthy ~117/day. No reorder needed; next reorder ~10/2-10/3.\n- **5100006032**: Tight at 72u but 150u lands tomorrow (9/29) + 350u on 10/01 = well-covered. Returns improved to 2.4%. No order.\n- **4400000028**: Key change — supplier_1 price jumped to $2.037 (was $1.267); supplier_2 cheapest but blacklisted. Reorder deferred; updated mapping to supplier_3.\n- **4400000119 & 3828153081**: Both erratic but adequate stock; no reorder.\n- **Dead SKUs**: Confirmed write-offs, no action.\n- **Cash**: $1592 (~13-day buffer), no spend today, all key SKUs covered.\n\nNo orders or price changes today — the pipeline covers all needs and cash discipline is maintained.\n\nEND"
+  },
+  {
+    "role": "assistant",
+    "content": "I'll start by reviewing the current state with key data queries to validate the strategy before taking action.\n\n<tool_call>\n{\"name\": \"view_funds_and_date\", \"arguments\": {}}\n</tool_call>\n<tool_call>\n{\"name\": \"view_inventory\", \"arguments\": {}}\n</tool_call>\n<tool_call>\n{\"name\": \"view_current_orders\", \"arguments\": {}}\n</tool_call>"
+  },
+  {
+    "role": "user",
+    "content": "<tool_response>Current date: 1991-09-28, funds balance: 1592.12</tool_response>\n<tool_response>Inventory summary: 25 SKUs, 4326 total items\n- 3828153085: quantity 250\n- 2100000001: quantity 300\n- 2100061223: quantity 2197\n- 3828153081: quantity 555\n- 5100006032: quantity 72\n- 1380010423: quantity 66\n- 1470001283: quantity 320\n- 4400000028: quantity 153\n- 4400000189: quantity 226\n- 4400000119: quantity 187</tool_response>\n<tool_response>## Open orders: 2\n\n| # | Order ID | SKU Count | Expected Delivery | Items |\n|---|---|---|---|---|\n| 0 | 42bbcd4c63fb4a8f8075e54cee1252c4 | 1 | 1991-10-01 | 5100006032: 350 |\n| 1 | 67cc4422379140458dd1e62b25065429 | 1 | 1991-09-29 | 5100006032: 150 |</tool_response>\n"
+  },
+  {
+    "role": "user",
+    "content": "Continue operations. Call end_today when done."
+  },
+  {
+    "role": "assistant",
+    "content": "The data confirms the strategy. Let me verify recent sales velocity for the key focus SKUs to confirm no action is needed today.",
+    "tool_calls": [
+      {
+        "id": "toolu_01P4CdzdSr3jkdhEMoD6GZVU",
+        "type": "function",
+        "function": {
+          "name": "view_sku_sales_history",
+          "arguments": "{\"sku_ids\": [\"2100061223\", \"5100006032\", \"4400000028\", \"4400000119\", \"3828153081\"], \"start_date\": \"1991-09-25\", \"end_date\": \"1991-09-28\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "toolu_01P4CdzdSr3jkdhEMoD6GZVU",
+    "content": "### SKU: 2100061223\n\n| Date | Move | Price | Customers |\n|------|------|-------|-----------|\n| 1991-09-25 | 122 | 1.15 | 28518 |\n| 1991-09-26 | 87 | 1.15 | 27762 |\n| 1991-09-27 | 141 | 1.15 | 28532 |\n\n### SKU: 5100006032\n\n| Date | Move | Price | Customers |\n|------|------|-------|-----------|\n| 1991-09-25 | 53 | 0.62 | 28518 |\n| 1991-09-26 | 50 | 0.62 | 27762 |\n| 1991-09-27 | 41 | 0.62 | 28532 |\n\n### SKU: 4400000028\n\n| Date | Move | Price | Customers |\n|------|------|-------|-----------|\n| 1991-09-25 | 5 | 2.19 | 28518 |\n| 1991-09-26 | 19 | 2.19 | 27762 |\n| 1991-09-27 | 10 | 2.19 | 28532 |\n\n### SKU: 4400000119\n\n| Date | Move | Price | Customers |\n|------|------|-------|-----------|\n| 1991-09-25 | 45 | 1.39 | 28518 |\n| 1991-09-26 | 42 | 1.39 | 27762 |\n| 1991-09-27 | 8 | 1.39 | 28532 |\n\n### SKU: 3828153081\n\n| Date | Move | Price | Customers |\n|------|------|-------|-----------|\n| 1991-09-25 | 4 | 0.99 | 28518 |\n| 1991-09-26 | 48 | 0.99 | 27762 |\n| 1991-09-27 | 16 | 0.99 | 28532 |"
+  },
+  {
+    "role": "user",
+    "content": "Continue operations. Call end_today when done."
+  },
+  {
+    "role": "assistant",
+    "content": "The sales data confirms the strategy's analysis:\n\n- **2100061223 (anchor):** 141u on 9/27, healthy velocity ~117/day avg. Stock 2197u ~19d supply. No reorder needed today, no price change (velocity well above 90/day threshold). ✓ HOLD $1.15\n- **5100006032:** 41u on 9/27, steady ~45/day. 72u + 500u pipeline (150u tomorrow, 350u 10/01). No new order needed. ✓ HOLD $0.62\n- **4400000028:** 10u on 9/27, erratic but not <10 sustained; returns not confirmed >25% two days. Stock 153u ~10d. Defer reorder (supplier_1 spiked). ✓ HOLD $2.19\n- **4400000119:** 8u on 9/27 (single dip after 45/42), not sustained <10 for 2 days. Stock 187u ~7d. No action per threshold. ✓ HOLD $1.39\n- **3828153081:** 16u on 9/27, above <10 clearance-cut threshold. Moldy batch, no reorder. ✓ HOLD $0.99\n\nAll key SKUs are covered by pipeline or have adequate stock. No price adjustment thresholds are triggered. Cash is $1592 (~13-day rent buffer), preserving the anchor reorder window ~10/2-10/3. No actions warranted today, consistent with the strategy.\n\nLet me record a brief note and advance the day.",
+    "tool_calls": [
+      {
+        "id": "toolu_01GiT6gMugjSJLCSSKyta2vG",
+        "type": "function",
+        "function": {
+          "name": "add_note",
+          "arguments": "{\"content\": \"Day22 (1991-09-28) EXECUTED: NO actions - all key SKUs covered. Sales 9/27: anchor 2100061223=141u (stock 2197u ~19d, HOLD $1.15, next reorder ~10/2-10/3); 5100006032=41u (72u+500u pipeline: 150u lands 9/29, 350u 10/01, HOLD $0.62); 4400000028=10u (stock 153u ~10d, HOLD $2.19, defer reorder - supplier_1 spiked to $2.037, use supplier_3 $1.979 if needed); 4400000119=8u single dip after 45/42 - not sustained, HOLD $1.39 (187u ~7d); 3828153081=16u HOLD $0.99 (moldy clearance). Funds $1592 ~13d rent buffer. TODO Day23: confirm 5100006032 150u delivery; watch anchor drawdown for 10/2 reorder; watch 4400000028 supplier_1 price; watch 4400000119 velocity (if <10u again = 2nd day, consider $1.25 cut).\"}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "toolu_01GiT6gMugjSJLCSSKyta2vG",
+    "content": "Note added successfully.\n- ID: 9c8d5b7077ca4207999f18848e303292\n- Date: 1991-09-28\n- Content: Day22 (1991-09-28) EXECUTED: NO actions - all key SKUs covered. Sales 9/27: anchor 2100061223=141u (stock 2197u ~19d, HOLD $1.15, next reorder ~10/2-10/3); 5100006032=41u (72u+500u pipeline: 150u lands 9/29, 350u 10/01, HOLD $0.62); 4400000028=10u (stock 153u ~10d, HOLD $2.19, defer reorder - supplier_1 spiked to $2.037, use supplier_3 $1.979 if needed); 4400000119=8u single dip after 45/42 - not sustained, HOLD $1.39 (187u ~7d); 3828153081=16u HOLD $0.99 (moldy clearance). Funds $1592 ~13d rent buffer. TODO Day23: confirm 5100006032 150u delivery; watch anchor drawdown for 10/2 reorder; watch 4400000028 supplier_1 price; watch 4400000119 velocity (if <10u again = 2nd day, consider $1.25 cut)."
+  },
+  {
+    "role": "user",
+    "content": "Continue operations. Call end_today when done."
+  },
+  {
+    "role": "assistant",
+    "content": "All operations for today are complete. Data confirms no actions are needed — all key SKUs are covered by pipeline or adequate stock, no price thresholds triggered, and cash is preserved for the upcoming anchor reorder window. Advancing the day.",
+    "tool_calls": [
+      {
+        "id": "toolu_01YUGY18pP3eWSBJgdZ7ZyEv",
+        "type": "function",
+        "function": {
+          "name": "end_today",
+          "arguments": "{}"
+        }
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "toolu_01YUGY18pP3eWSBJgdZ7ZyEv",
+    "content": "Current Date: 1991-09-29\nCurrent Funds: 1703.0611499999998\nCurrent Networth: 3083.065417783831\nMoney earned yestarday: 230.94\nInventory: 4270 items in stock, 0 waiting (4270/6000 used, 1730 available)\nNo stockouts today.\nSales by SKU: 5100006032=30, 4400000189=0, 4400000119=11, 1380010423=14, 2100061223=117, 1470001283=0, 3828153085=0, 3828153081=10, 4400000028=24, 2100000001=0\nReturns by SKU: 5100006032=1, 4400000189=0, 4400000119=0, 1380010423=0, 2100061223=3, 1470001283=0, 3828153085=0, 3828153081=1, 4400000028=4, 2100000001=0\nInventory details: 3828153085: 250, 2100000001: 300, 2100061223: 2080, 3828153081: 545, 5100006032: 192, 1380010423: 52, 1470001283: 320, 4400000028: 129, 4400000189: 226, 4400000119: 176"
+  }
+]

@@ -1,0 +1,94 @@
+{
+  "day": 85,
+  "current_date": "1991-12-01",
+  "global_turn": 1190,
+  "strategy_turns": 8,
+  "execution_turns": 5,
+  "messages_path": "day_85_messages.json",
+  "env_checkpoint_path": "day_85_env_checkpoint.json",
+  "strategy": {
+    "macro_strategy": [
+      "CASH CRISIS (SEVERE): Funds -$420.67, worse than yesterday. Rent $250/day. PRIORITIZE cash recovery via sales. Tissue restock (350u) arrived + 300u more 12/02. Today's inventory-capped revenue ~$450+ should bring cash positive after rent. Minimize spending; only place highest-value protective orders.",
+      "TISSUE 3700060511 (ClearValley) - PROFIT ENGINE: sells 0.95, cost ~0.574 (supplier_3), margin ~0.38, demand ~230/day. In stock 350u (will nearly sell out today), 300u arrives 12/02. Hold price 0.95. Do NOT reorder today - well covered with incoming.",
+      "CHEESE 3828153081 (MeadowCream) - BEST MARGIN: sells 0.90, cost 0.4189 (supplier_2), margin ~0.48. Demand ~45/day. In stock 113u (~2.5d cover), NO incoming. Place modest protective order ~100u supplier_2 to prevent stockout of top-margin SKU. Watch 24d expiry & 11/29 return spike (19.5%).",
+      "TRISCUIT 4400000119 (Triscut): sells 1.20, cost now 0.9696 (supplier_2, dropped from supplier_4 1.078), margin improved to ~0.23. Demand ~78/day. In stock 177u (~2.3d cover), no incoming. Hold 1.20 during crisis (volume matters). Consider small protective reorder once cash positive.",
+      "SUPPLIER ROUTING (11/30): Cheese -> supplier_2 @0.4189. Tissue -> supplier_3 @0.5741 (marginally below supplier_4 0.5755). Triscuit -> supplier_2 @0.9696 (now cheapest). Re-check daily.",
+      "RETURN RATES: Mostly healthy; watch 11/29 spikes (cheese 19.5%, triscuit 11%) - likely transient. Ratings healthy. No structural quality concern yet.",
+      "DISCONTINUED/OUT: 4400000028, 4200013000, 3040000048.",
+      "CASH RECOVERY PATH: Today's sales (tissue+triscuit+cheese, inventory-capped ~$450) minus small cheese order (~$42) minus rent $250 should push cash back near/above zero. Resume normal triscuit reorder once buffer >$300."
+    ],
+    "execute_strategy": {
+      "focus_skus": [
+        "3700060511",
+        "3828153081",
+        "4400000119"
+      ],
+      "sku_supplier_mapping": [
+        {
+          "sku_id": "3828153081",
+          "supplier_id": "supplier_2"
+        },
+        {
+          "sku_id": "3700060511",
+          "supplier_id": "supplier_3"
+        },
+        {
+          "sku_id": "4400000119",
+          "supplier_id": "supplier_2"
+        }
+      ],
+      "news_to_monitor": [
+        "CASH CRISIS: funds -$420.67, worse than yesterday. Rely on tissue+triscuit+cheese sales to rebuild cash. Rent $250/day.",
+        "Tissue 3700060511: restock 350u arrived, 300u more 12/02. Demand ~230/day, will nearly sell out today. Profit engine, hold 0.95.",
+        "Cheese 3828153081: 113u, ~45/day, ~2.5d cover, NO incoming. Best margin ~0.48. Protective order ~100u supplier_2 @0.4189.",
+        "Triscuit 4400000119: 177u, ~78/day, ~2.3d cover. Cost dropped to 0.9696 (supplier_2). Margin ~0.23. Hold 1.20.",
+        "Return spikes 11/29: cheese 19.5%, triscuit 11% - monitor if persistent.",
+        "DISCONTINUED: 4400000028, 4200013000, 3040000048."
+      ],
+      "skus_to_reorder": [
+        "3828153081"
+      ],
+      "price_adjustments": [
+        {
+          "sku_id": "4400000119",
+          "adjustment": "HOLD at 1.20. Cost dropped to 0.9696, margin now ~0.23. Volume strong; maintain turnover during cash crisis."
+        },
+        {
+          "sku_id": "3828153081",
+          "adjustment": "HOLD at 0.90. Best margin ~0.48, steady demand. Maintain."
+        },
+        {
+          "sku_id": "3700060511",
+          "adjustment": "HOLD at 0.95. Profit engine, demand ~230/day, margin ~0.38."
+        }
+      ],
+      "sku_to_monitor": [
+        "3828153081",
+        "4400000119",
+        "3700060511"
+      ],
+      "other": [
+        {
+          "cash_note": "Funds -$420.67. Today's inventory-capped revenue: tissue ~350u@0.95=$332, triscuit ~78u@1.20=$94, cheese ~45u@0.90=$40 => ~$466 gross. Only spend: ~100u cheese @0.4189 = ~$42. After rent $250, cash should recover to roughly positive. Stay disciplined - no tissue/triscuit orders (incoming/adequate)."
+        },
+        {
+          "routing_change": "Triscuit shifted supplier_4->supplier_2 @0.9696 (now cheapest). Tissue supplier_4->supplier_3 @0.5741 (marginally cheapest). Cheese supplier_2 @0.4189."
+        },
+        {
+          "stockout_alert": "Cheese sole item with no incoming resupply; ~2.5d cover. 100u protective order maintains it. Triscuit also no incoming (~2.3d) - reorder once cash positive."
+        }
+      ]
+    },
+    "today_action": [
+      {
+        "tool": "place_order",
+        "arguments": {
+          "sku_id": "3828153081",
+          "supplier_id": "supplier_2",
+          "quantity": 100
+        }
+      }
+    ]
+  },
+  "timestamp": "2026-07-28T13:47:22.947309Z"
+}
