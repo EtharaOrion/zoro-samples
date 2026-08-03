@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./mascot.png" width="330" alt="Zoro's Store — the delivery's emblem: a green-haired swordsman shopkeeper carrying a Zoro's Store shopping bag past his open storefront, with a chalkboard reading Run · Manage · Retain · Grow.">
+<img src="./banner.png" width="100%" alt="Zoro · Retail Operations RL Environment — a green-haired swordsman shopkeeper carrying a Zoro's Store shopping bag, beside the title ZORO and five stat cards: 30 tasks · 180-day horizon · 19 tools · 60 raw runs · [0–1] reward.">
 
 # Zoro · Retail Operations RL Environment
 
@@ -10,19 +10,17 @@
 > a 19-tool retail-store simulator graded by deterministic checks + an LLM rubric council ·
 > money-primary scalar reward in `[0, 1]`**
 
-![type](https://img.shields.io/badge/RL_environment-agentic,_long--horizon-blueviolet?style=for-the-badge)
-![tasks](https://img.shields.io/badge/tasks-30-blue?style=for-the-badge)
-![horizon](https://img.shields.io/badge/horizon-180_days-orange?style=for-the-badge)
-![tools](https://img.shields.io/badge/action_space-19_tools-00b4ab?style=for-the-badge)
+[Motivation](#-motivation--intended-use)&nbsp; · &nbsp;[Environment](#-inside-the-environment)&nbsp; · &nbsp;[Reward](#-reward-design)&nbsp; · &nbsp;[Grading](#-how-grading-works)&nbsp; · &nbsp;[Dataset](#-whats-in-this-delivery)&nbsp; · &nbsp;[Trajectories](#-trajectories-raw-ungraded-by-design)
 
-![grading](https://img.shields.io/badge/grading-deterministic_checks_+_LLM_council-2ea44f?style=for-the-badge)
-![reward](https://img.shields.io/badge/reward-money--primary_∈_%5B0,1%5D-brightgreen?style=for-the-badge)
-![trajectories](https://img.shields.io/badge/raw_runs-60_·_opus--4.8_+_gpt--5.6--sol-yellow?style=for-the-badge)
+![type](https://img.shields.io/badge/RL_environment-agentic,_long--horizon-8A2BE2?style=for-the-badge)
+![tasks](https://img.shields.io/badge/tasks-30-1E90FF?style=for-the-badge)
+![horizon](https://img.shields.io/badge/horizon-180_days-F2A93B?style=for-the-badge)
+![tools](https://img.shields.io/badge/action_space-19_tools-00B4AB?style=for-the-badge)
+
+![grading](https://img.shields.io/badge/grading-deterministic_checks_+_LLM_council-2EA44F?style=for-the-badge)
+![reward](https://img.shields.io/badge/reward-money--primary_∈_%5B0,1%5D-34D17F?style=for-the-badge)
+![trajectories](https://img.shields.io/badge/raw_runs-60_·_opus--4.8_+_gpt--5.6--sol-A78BFA?style=for-the-badge)
 ![license](https://img.shields.io/badge/license-MIT-lightgrey?style=for-the-badge)
-
-| 🗂️ **30** | 📅 **180** | 🛠️ **19** | 🤖 **60** | 💰 **[0 – 1]** |
-|:---:|:---:|:---:|:---:|:---:|
-| Harbor tasks | simulated days per episode | tools in the action space | raw frontier-model runs | money-primary scalar reward |
 
 *The storefront creed on the chalkboard — **Run · Manage · Retain · Grow** — is the whole game: operate the store, day after day, and compound.*
 
@@ -254,7 +252,8 @@ pie showData
 zoro-samples/
 ├── README.md
 ├── LICENSE                              # MIT, © 2026 Ethara.AI
-├── mascot.png                           # the Zoro's Store emblem above (circular, transparent bg)
+├── banner.png                           # the ZORO hero banner at the top of this README
+├── mascot.png                           # the Zoro's Store emblem (circular, transparent bg)
 ├── .gitattributes                       # *.jsonl tracked via Git LFS
 ├── .gitignore
 └── <task-uuid>/                         # × 30, UUID = task identity
