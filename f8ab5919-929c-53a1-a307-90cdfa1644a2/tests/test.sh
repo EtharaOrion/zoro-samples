@@ -9,6 +9,7 @@ TESTS="$TASK_DIR/tests"
 # The graded submission: the agent's canonical trajectory (tool_calls.jsonl).
 SUB="${SUBMISSION:?set SUBMISSION to the agent run dir or its tool_calls.jsonl}"
 OUT="${VERIFIER_OUT:-$TASK_DIR/verifier}"
+TRAJ_MODEL="${TRAJECTORY_MODEL:-}"
 mkdir -p "$OUT"
 
 # ARTIFACT 1 — deterministic outcome + process pytest (imports evaluation fixtures).
@@ -29,6 +30,7 @@ if [ "${NO_COUNCIL:-0}" != "1" ]; then
       --truth   "$TASK_DIR/TRUTH.md" \
       --traj-path "$SUB" \
       --dataset-path "$TASK_DIR/environment/dataset.json" \
+      ${TRAJ_MODEL:+--trajectory-model "$TRAJ_MODEL"} \
       --out "$OUT/council_results.json" || echo "WARN: council failed; aggregate will run pytest-only"
 fi
 
