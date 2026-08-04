@@ -121,7 +121,7 @@ The world is frozen per task in `environment/dataset.json`, a flat config (27 to
 | Frozen world config | `<task-uuid>/environment/dataset.json` |
 | Judge-facing ground truth | `<task-uuid>/TRUTH.md` (council context: setup, strong-operator play by phase, must-hold properties, failure modes) |
 | Harbor metadata | `<task-uuid>/task.toml` |
-| Verifier | `<task-uuid>/tests/` (`test.sh`, `test_outputs.py`, `rubrics.json`, `thresholds.json`) |
+| Verifier | `<task-uuid>/tests/` (`test.sh`, `test_output.py`, `rubrics.json`, `thresholds.json`) |
 | Oracle solution | `<task-uuid>/solution/` (`solve.sh`, full `tool_calls.jsonl`, `golden.json`, `metadata.json`) |
 | Scored model trajectories | `<task-uuid>/trajectories/{opus-4-8, gpt-5-6-sol}/run_1/` (agent run + `verifier/` output) |
 
@@ -270,7 +270,7 @@ zoro-samples/
     │   └── metadata.json
     ├── tests/
     │   ├── test.sh                      # Harbor verifier entry point (41 lines)
-    │   ├── test_outputs.py              # 21 deterministic checks over the trajectory
+    │   ├── test_output.py               # 21 deterministic checks over the trajectory
     │   ├── rubrics.json                 # 12 council rubrics (9 positive, 3 negative)
     │   └── thresholds.json              # frozen scoring formula, world params, oracle_nw, calibration
     └── trajectories/
@@ -304,7 +304,7 @@ flowchart LR
     style E fill:#2B3157,stroke:#20243E,color:#fff
 ```
 
-**Action & observation space, 19 tools** (enumerated in each task's `test_outputs.py` as `VALID_TOOLS`):
+**Action & observation space, 19 tools** (enumerated in each task's `test_output.py` as `VALID_TOOLS`):
 
 | Group | Tools |
 | --- | --- |
@@ -370,7 +370,7 @@ flowchart LR
 
 `tests/test.sh` (41 lines, byte-identical across all 30 tasks except the embedded `--task-id`) orchestrates three stages, reading the submission from `SUBMISSION` (an agent run dir or its `tool_calls.jsonl`) and writing to `VERIFIER_OUT` (default `$TASK_DIR/verifier`):
 
-1. **Deterministic pytest** on `tests/test_outputs.py` (`--task-id/--traj-path/--dataset-path/--thresholds-path`, JSON out to `test_results.json`; run with `|| true` because test failures are data, not errors). The battery is **21 checks**, each tagged `@pytest.mark.check(id, weight, knockout, category, kind)`:
+1. **Deterministic pytest** on `tests/test_output.py` (`--task-id/--traj-path/--dataset-path/--thresholds-path`, JSON out to `test_results.json`; run with `|| true` because test failures are data, not errors). The battery is **21 checks**, each tagged `@pytest.mark.check(id, weight, knockout, category, kind)`:
    - **2 integrity gates** (weight 0): the run's config matches the frozen task; the trajectory is readable with finite net worth.
    - **1 money-outcome check** computing `O` with horizon pinning.
    - **10 weighted process checks** (weights sum **12.5**): `valid_tools_used` 1.0 · `supplier_board_before_order` 1.5 · `view_orders_before_place` 1.0 · `day1_order_placed` 1.5 · `day1_supplier_read_before_order` 0.5 · `priced_before_first_sale` 1.0 · `reorder_after_stockout` 1.0 · `no_prolonged_order_drought` 1.5 · `no_cash_paralysis` 1.5 · `low_signal_drift_bounded` 2.0.
@@ -421,7 +421,7 @@ For a concrete example, on task `000632bd` (still_hard / hard / mid tier, oracle
 
 - **Every task has a full oracle solution.** `solution/solve.sh` replays a parameterized oracle policy (`sample_size = 2`, `bulk_qty_multiplier = 4` on task `000632bd`) via the shared harness; `golden.json` records the outcome (task `000632bd`: `final_net_worth = 94,245.37`, `days_completed = 180/180`, `survival_fraction = 1.0`, `oracle_version = v1`) plus a `policy_source_sha256` and `external_data_sha256` hashes over its 5 data inputs, so the oracle run is fingerprinted end to end. That oracle trace is 23,931 tool calls (90.4 MB) produced in 518.87 s.
 - **Attainable, per-task ceiling.** The oracle's `oracle_nw` is the denominator of the money score, so `O = 1.0` is demonstrated-attainable on every task, and the ceiling scales with the economy (a micro-tier task has a far smaller ceiling than a mid- or large-tier one).
-- **Uniform structure, verified.** Spot-checked across tasks: identical directory layout; `tests/test.sh` byte-identical modulo the `--task-id` line; `dataset.json` has the identical 27-key set everywhere; `test_outputs.py` is per-task generated but structurally the same battery (same check ids and weights, cosmetic differences only); `rubrics.json` is always 12 rubrics on one schema with task-specific wording. What varies is exactly what should: world economics, seeds, category lists, `oracle_nw`, and the prose that tracks them.
+- **Uniform structure, verified.** Spot-checked across tasks: identical directory layout; `tests/test.sh` byte-identical modulo the `--task-id` line; `dataset.json` has the identical 27-key set everywhere; `test_output.py` is per-task generated but structurally the same battery (same check ids and weights, cosmetic differences only); `rubrics.json` is always 12 rubrics on one schema with task-specific wording. What varies is exactly what should: world economics, seeds, category lists, `oracle_nw`, and the prose that tracks them.
 - **Integrity gates before scoring.** A run graded against the wrong world config, or an unreadable / non-finite trajectory, is excluded (`integrity_gate: exclude`) rather than silently scored. All 60 shipped runs pass the gate (`integrity: ok` in each `reward.json`).
 - **Honest calibration provenance.** Threshold marks are declared as single-oracle-run measurements with provisional flags in `thresholds.json`, so the delivery documents its own calibration maturity instead of overstating it.
 

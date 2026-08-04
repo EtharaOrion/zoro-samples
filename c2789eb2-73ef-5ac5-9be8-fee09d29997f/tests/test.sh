@@ -14,7 +14,7 @@ mkdir -p "$OUT"
 
 # ARTIFACT 1 — deterministic outcome + process pytest (imports evaluation fixtures).
 # Test failures are DATA, not errors -> never abort the verifier on non-zero pytest exit.
-pytest "$TESTS/test_outputs.py" -q \
+pytest "$TESTS/test_output.py" -q \
     --task-id c2789eb2-73ef-5ac5-9be8-fee09d29997f \
     --traj-path "$SUB" \
     --dataset-path "$TASK_DIR/environment/dataset.json" \
